@@ -103,7 +103,7 @@ export default class Device {
       if (deviceData['1'] !== undefined) {
         // Active state
         const active = deviceData['1'] ? 1 : 0;
-        this.logger.info(`Update active state to ${active} for device ${this.id}.`);
+        this.logger.debug(`Update active state to ${active} for device ${this.id}.`);
         this.humidifierService?.updateCharacteristic(this.platform.Characteristic.Active, active);
       }
 
@@ -123,7 +123,7 @@ export default class Device {
           relativeHumidityHumidifierThreshold = '100';
         }
 
-        this.logger.info(`Update target humidity to ${relativeHumidityHumidifierThreshold} for device ${this.id}.`);
+        this.logger.debug(`Update target humidity to ${relativeHumidityHumidifierThreshold} for device ${this.id}.`);
 
         this.humidifierService?.updateCharacteristic(
           this.platform.Characteristic.RelativeHumidityHumidifierThreshold,
@@ -135,7 +135,7 @@ export default class Device {
       if (deviceData['14'] !== undefined) {
         const currentRelativeHumidity = deviceData['14'].toString();
 
-        this.logger.info(`Update current humidity to ${currentRelativeHumidity} for device ${this.id}.`);
+        this.logger.debug(`Update current humidity to ${currentRelativeHumidity} for device ${this.id}.`);
 
         this.humidifierService?.updateCharacteristic(
           this.platform.Characteristic.CurrentRelativeHumidity,
@@ -147,7 +147,7 @@ export default class Device {
       if (deviceData['102'] !== undefined) {
         const state = deviceData['102'] ? 0 : 1;
 
-        this.logger.info(`Update state to ${state} for device ${this.id}.`);
+        this.logger.debug(`Update state to ${state} for device ${this.id}.`);
 
         this.humidifierService?.updateCharacteristic(
           this.platform.Characteristic.TargetHumidifierDehumidifierState,
@@ -169,7 +169,7 @@ export default class Device {
           fanSpeed = '100';
         }
 
-        this.logger.info(`Update fan speed to ${fanSpeed} for device ${this.id}.`);
+        this.logger.debug(`Update fan speed to ${fanSpeed} for device ${this.id}.`);
 
         this.humidifierService?.updateCharacteristic(
           this.platform.Characteristic.RotationSpeed,
@@ -181,7 +181,7 @@ export default class Device {
       if (deviceData['22'] !== undefined) {
         const waterLevel = deviceData['22'] === 1 ? 0 : 100;
 
-        this.logger.info(`Update water level to ${waterLevel} for device ${this.id}.`);
+        this.logger.debug(`Update water level to ${waterLevel} for device ${this.id}.`);
 
         this.humidifierService?.updateCharacteristic(
           this.platform.Characteristic.WaterLevel,
@@ -193,7 +193,7 @@ export default class Device {
         // Filter change
         const filterChange = deviceData['33'] === 0 ? 1 : 0;
 
-        this.logger.info(`Update filter change indication ${filterChange} for device ${this.id}.`);
+        this.logger.debug(`Update filter change indication ${filterChange} for device ${this.id}.`);
 
         this.humidifierService?.updateCharacteristic(
           this.platform.Characteristic.FilterChangeIndication,
@@ -203,7 +203,7 @@ export default class Device {
         // Filter life level
         const filterLifeLevel = deviceData['33'].toString();
 
-        this.logger.info(`Update filter live level ${filterLifeLevel} for device ${this.id}.`);
+        this.logger.debug(`Update filter live level ${filterLifeLevel} for device ${this.id}.`);
 
         this.humidifierService?.updateCharacteristic(
           this.platform.Characteristic.FilterLifeLevel,
@@ -212,22 +212,22 @@ export default class Device {
       }
 
       // Light
-      if (deviceData['34'] !== undefined) {
-        let currentValue;
+      // if (deviceData['34'] !== undefined) {
+      //   let currentValue;
 
-        if (deviceData['34'] === 'Close') {
-          currentValue = '0';
-        } else if (deviceData['34'] === 'Half') {
-          currentValue = '50';
-        } else {
-          currentValue = '100';
-        }
+      //   if (deviceData['34'] === 'Close') {
+      //     currentValue = '0';
+      //   } else if (deviceData['34'] === 'Half') {
+      //     currentValue = '50';
+      //   } else {
+      //     currentValue = '100';
+      //   }
 
-        this.humidifierService?.updateCharacteristic(
-          this.platform.Characteristic.CurrentRelativeHumidity,
-          currentValue,
-        );
-      }
+      //   this.humidifierService?.updateCharacteristic(
+      //     this.platform.Characteristic.CurrentRelativeHumidity,
+      //     currentValue,
+      //   );
+      // }
     }
   };
 

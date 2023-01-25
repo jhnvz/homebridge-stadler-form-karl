@@ -66,13 +66,13 @@ class Device {
             this.humidifier.set({ dps: 101, set: newValue });
         };
         this.handleRefresh = (data) => {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+            var _a, _b, _c, _d, _e, _f, _g, _h;
             const deviceData = data['dps'];
             if (deviceData) {
                 if (deviceData['1'] !== undefined) {
                     // Active state
                     const active = deviceData['1'] ? 1 : 0;
-                    this.logger.info(`Update active state to ${active} for device ${this.id}.`);
+                    this.logger.debug(`Update active state to ${active} for device ${this.id}.`);
                     (_a = this.humidifierService) === null || _a === void 0 ? void 0 : _a.updateCharacteristic(this.platform.Characteristic.Active, active);
                 }
                 // Current target humidity
@@ -93,19 +93,19 @@ class Device {
                     else if (relativeHumidityHumidifierThreshold === 'CO') {
                         relativeHumidityHumidifierThreshold = '100';
                     }
-                    this.logger.info(`Update target humidity to ${relativeHumidityHumidifierThreshold} for device ${this.id}.`);
+                    this.logger.debug(`Update target humidity to ${relativeHumidityHumidifierThreshold} for device ${this.id}.`);
                     (_b = this.humidifierService) === null || _b === void 0 ? void 0 : _b.updateCharacteristic(this.platform.Characteristic.RelativeHumidityHumidifierThreshold, relativeHumidityHumidifierThreshold);
                 }
                 // Current humidity
                 if (deviceData['14'] !== undefined) {
                     const currentRelativeHumidity = deviceData['14'].toString();
-                    this.logger.info(`Update current humidity to ${currentRelativeHumidity} for device ${this.id}.`);
+                    this.logger.debug(`Update current humidity to ${currentRelativeHumidity} for device ${this.id}.`);
                     (_c = this.humidifierService) === null || _c === void 0 ? void 0 : _c.updateCharacteristic(this.platform.Characteristic.CurrentRelativeHumidity, currentRelativeHumidity);
                 }
                 // Current state
                 if (deviceData['102'] !== undefined) {
                     const state = deviceData['102'] ? 0 : 1;
-                    this.logger.info(`Update state to ${state} for device ${this.id}.`);
+                    this.logger.debug(`Update state to ${state} for device ${this.id}.`);
                     (_d = this.humidifierService) === null || _d === void 0 ? void 0 : _d.updateCharacteristic(this.platform.Characteristic.TargetHumidifierDehumidifierState, state);
                 }
                 // Fan speed
@@ -123,39 +123,40 @@ class Device {
                     else if (fanSpeed === 'level_4') {
                         fanSpeed = '100';
                     }
-                    this.logger.info(`Update fan speed to ${fanSpeed} for device ${this.id}.`);
+                    this.logger.debug(`Update fan speed to ${fanSpeed} for device ${this.id}.`);
                     (_e = this.humidifierService) === null || _e === void 0 ? void 0 : _e.updateCharacteristic(this.platform.Characteristic.RotationSpeed, fanSpeed);
                 }
                 // Water level
                 if (deviceData['22'] !== undefined) {
                     const waterLevel = deviceData['22'] === 1 ? 0 : 100;
-                    this.logger.info(`Update water level to ${waterLevel} for device ${this.id}.`);
+                    this.logger.debug(`Update water level to ${waterLevel} for device ${this.id}.`);
                     (_f = this.humidifierService) === null || _f === void 0 ? void 0 : _f.updateCharacteristic(this.platform.Characteristic.WaterLevel, waterLevel);
                 }
                 if (deviceData['33'] !== undefined) {
                     // Filter change
                     const filterChange = deviceData['33'] === 0 ? 1 : 0;
-                    this.logger.info(`Update filter change indication ${filterChange} for device ${this.id}.`);
+                    this.logger.debug(`Update filter change indication ${filterChange} for device ${this.id}.`);
                     (_g = this.humidifierService) === null || _g === void 0 ? void 0 : _g.updateCharacteristic(this.platform.Characteristic.FilterChangeIndication, filterChange);
                     // Filter life level
                     const filterLifeLevel = deviceData['33'].toString();
-                    this.logger.info(`Update filter live level ${filterLifeLevel} for device ${this.id}.`);
+                    this.logger.debug(`Update filter live level ${filterLifeLevel} for device ${this.id}.`);
                     (_h = this.humidifierService) === null || _h === void 0 ? void 0 : _h.updateCharacteristic(this.platform.Characteristic.FilterLifeLevel, filterLifeLevel);
                 }
                 // Light
-                if (deviceData['34'] !== undefined) {
-                    let currentValue;
-                    if (deviceData['34'] === 'Close') {
-                        currentValue = '0';
-                    }
-                    else if (deviceData['34'] === 'Half') {
-                        currentValue = '50';
-                    }
-                    else {
-                        currentValue = '100';
-                    }
-                    (_j = this.humidifierService) === null || _j === void 0 ? void 0 : _j.updateCharacteristic(this.platform.Characteristic.CurrentRelativeHumidity, currentValue);
-                }
+                // if (deviceData['34'] !== undefined) {
+                //   let currentValue;
+                //   if (deviceData['34'] === 'Close') {
+                //     currentValue = '0';
+                //   } else if (deviceData['34'] === 'Half') {
+                //     currentValue = '50';
+                //   } else {
+                //     currentValue = '100';
+                //   }
+                //   this.humidifierService?.updateCharacteristic(
+                //     this.platform.Characteristic.CurrentRelativeHumidity,
+                //     currentValue,
+                //   );
+                // }
             }
         };
         this.id = id;
